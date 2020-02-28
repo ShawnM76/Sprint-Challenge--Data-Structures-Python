@@ -1,4 +1,9 @@
 from doubly_linked_list import DoublyLinkedList
+# Plan
+# The capacity and storage have to be the same length
+# whenever the capcity and storage are the same length
+# replace the new input with the oldest input
+# this could go like first in first out like a que
 
 
 class RingBuffer:
@@ -8,30 +13,21 @@ class RingBuffer:
         self.storage = DoublyLinkedList()
 
     def append(self, item):
-        # First check to see if capacity has been reached
-        if self.storage.length == self.capacity:
-            # Check if the current position exists and its previous node is not the head
-            if self.current and self.current is not self.storage.head:
-                # Replace the value of the previous node
-                self.current.prev.value = item
-                # Update where the current node is
-                self.current = self.current.prev
-            else:
-                # Remove from tail and set current position
-                self.storage.remove_from_tail()
-                self.storage.add_to_tail(item)
-                self.current = self.storage.tail
+        if self.capacity == len(self.storage):
+            head = self.storage.head
+            while(self.current is not None):
+
         else:
             self.storage.add_to_head(item)
 
     def get(self):
         # Note:  This is the only [] allowed
         list_buffer_contents = []
-        current_node = self.storage.tail
+
+        current_node = self.storage.head
+
         for node in range(self.storage.length):
             list_buffer_contents.append(current_node.value)
-            if current_node.prev:
-                current_node = current_node.prev
 
         return list_buffer_contents
 
